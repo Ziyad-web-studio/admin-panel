@@ -1,16 +1,16 @@
-# Futuristic Minimal Portfolio
+# Portofolio Minimalis Futuristik
 
-A modern, brutalist-style personal portfolio website built with Next.js (App Router), Tailwind CSS, and TypeScript.
+Situs web portofolio pribadi modern bergaya brutalis yang dibangun dengan Next.js (App Router), Tailwind CSS, dan TypeScript.
 
-## Features
+## Fitur
 
-- **Futuristic Design**: Clean, dark, and powerful aesthetic with violet accents.
-- **Projects Management**: Admin panel to manage projects.
-- **File-Based CMS**: Projects are stored in `src/data/projects.json`.
-- **GitHub Integration**: Publishing updates directly to GitHub to trigger Vercel deployments.
-- **Authentication**: Simple password-based admin access.
+- **Desain Futuristik**: Estetika bersih, gelap, dan kuat dengan aksen ungu.
+- **Manajemen Proyek**: Panel admin untuk mengelola proyek.
+- **CMS Berbasis File**: Proyek disimpan di `src/data/projects.json`.
+- **Integrasi GitHub**: Menerbitkan pembaruan langsung ke GitHub untuk memicu deployment Vercel.
+- **Autentikasi**: Akses admin berbasis kata sandi sederhana.
 
-## Tech Stack
+## Tumpukan Teknologi
 
 - Next.js 16 (App Router)
 - Tailwind CSS 4
@@ -20,52 +20,52 @@ A modern, brutalist-style personal portfolio website built with Next.js (App Rou
 - Octokit (GitHub API)
 - Jose (JWT Auth)
 
-## Setup
+## Pengaturan
 
-1.  **Clone the repository:**
+1.  **Clone repositori:**
     ```bash
     git clone https://github.com/your-username/your-repo-name.git
     cd your-repo-name
     ```
 
-2.  **Install dependencies:**
+2.  **Instal dependensi:**
     ```bash
     npm install
     ```
 
-3.  **Environment Variables:**
-    Copy `.env.example` to `.env.local` and fill in the values:
+3.  **Variabel Lingkungan:**
+    Salin `.env.example` ke `.env.local` dan isi nilainya:
     ```bash
     cp .env.example .env.local
     ```
-    - `ADMIN_PASSWORD`: Password for accessing the admin panel.
-    - `JWT_SECRET`: Secret key for signing JWTs (generate a strong random string).
-    - `GITHUB_TOKEN`: A GitHub Personal Access Token (PAT) with `repo` scope.
-    - `GITHUB_REPO_OWNER`: Your GitHub username.
-    - `GITHUB_REPO_NAME`: The name of this repository.
+    - `ADMIN_PASSWORD`: Kata sandi untuk mengakses panel admin.
+    - `JWT_SECRET`: Kunci rahasia untuk menandatangani JWT (buat string acak yang kuat).
+    - `GITHUB_TOKEN`: Token Akses Pribadi (PAT) GitHub dengan cakupan `repo`.
+    - `GITHUB_REPO_OWNER`: Nama pengguna GitHub Anda.
+    - `GITHUB_REPO_NAME`: Nama repositori ini.
 
-4.  **Run locally:**
+4.  **Jalankan secara lokal:**
     ```bash
     npm run dev
     ```
-    Visit `http://localhost:3000` for the public site.
-    Visit `http://localhost:3000/admin` for the admin panel.
+    Kunjungi `http://localhost:3000` untuk situs publik.
+    Kunjungi `http://localhost:3000/admin` untuk panel admin.
 
-## Deployment on Vercel
+## Deployment di Vercel
 
-1.  Push your code to a GitHub repository.
-2.  Import the project into Vercel.
-3.  Add the environment variables from your `.env.local` to the Vercel project settings.
+1.  Push kode Anda ke repositori GitHub.
+2.  Impor proyek ke Vercel.
+3.  Tambahkan variabel lingkungan dari `.env.local` Anda ke pengaturan proyek Vercel.
 4.  Deploy!
 
-## Admin Usage
+## Penggunaan Admin
 
-1.  Navigate to `/admin`.
-2.  Login with your `ADMIN_PASSWORD`.
-3.  Add or edit projects.
-4.  Click "Publish to GitHub" to commit changes to `src/data/projects.json`.
-5.  Wait for Vercel to redeploy with the new content.
+1.  Arahkan ke `/admin`.
+2.  Login dengan `ADMIN_PASSWORD` Anda.
+3.  Tambahkan atau edit proyek.
+4.  Klik "Publish to GitHub" untuk melakukan commit perubahan ke `src/data/projects.json`.
+5.  Tunggu Vercel melakukan redeploy dengan konten baru.
 
-## License
+## Lisensi
 
 MIT
