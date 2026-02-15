@@ -10,15 +10,14 @@ export default async function ProjectsPage() {
   const publishedProjects = allProjects.filter(p => p.isPublished);
 
   return (
-    <div className="flex flex-col min-h-screen bg-primary-bg selection:bg-accent selection:text-white">
+    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <Navbar />
-      <main className="flex-grow pt-24 pb-12 px-4 max-w-7xl mx-auto w-full">
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 text-white">
-            PROJECTS
-            <span className="text-highlight">.</span>
+      <main className="flex-grow pt-32 pb-20 px-6 max-w-7xl mx-auto w-full">
+        <div className="mb-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">
+            Projects
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             A selection of my recent work, experiments, and contributions.
           </p>
         </div>
@@ -29,9 +28,9 @@ export default async function ProjectsPage() {
               <ProjectCard key={project.id} project={project} />
             ))
           ) : (
-            <div className="col-span-full text-center py-20 text-gray-500">
-              <p className="text-xl">No projects published yet.</p>
-              <p className="text-sm mt-2 text-gray-600">Check back soon for updates.</p>
+            <div className="col-span-full text-center py-24 text-muted-foreground/60 border border-dashed border-border rounded-3xl bg-secondary/30">
+              <p className="text-xl font-medium">No projects published yet.</p>
+              <p className="text-sm mt-2">Check back soon for updates.</p>
             </div>
           )}
         </div>
