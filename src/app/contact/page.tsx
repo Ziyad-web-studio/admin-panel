@@ -35,7 +35,7 @@ export default function ContactPage() {
               <div>
                 <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">GitHub</label>
                 <a href="https://github.com/Ziyad-web-studio" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-white hover:text-highlight transition-colors">
-                  https://github.com/Ziyad-web-studio
+                  Ziyad-web-studio
                 </a>
               </div>
 
