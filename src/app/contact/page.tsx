@@ -28,7 +28,7 @@ export default function ContactPage() {
               <div>
                 <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Email</label>
                 <a href="mailto:hello@example.com" className="text-2xl font-bold text-white hover:text-highlight transition-colors">
-                  hello@example.com
+                  ziyad1aku@gmail.com
                 </a>
               </div>
 
