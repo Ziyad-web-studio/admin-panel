@@ -3,17 +3,15 @@ import Footer from '@/components/Footer';
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-primary-bg selection:bg-accent selection:text-white">
+    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <Navbar />
-      <main className="flex-grow pt-32 pb-20 px-4 max-w-4xl mx-auto w-full text-foreground space-y-24">
+      <main className="flex-grow pt-32 pb-20 px-6 max-w-3xl mx-auto w-full space-y-20">
 
-        <section className="text-center animate-in fade-in zoom-in duration-1000">
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-4 leading-none">
-            GET IN
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">TOUCH</span>.
+        <section className="text-center animate-in fade-in zoom-in duration-1000 space-y-6">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
+            Get in Touch
           </h1>
-          <p className="text-xl text-gray-400 mt-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
             Available for freelance projects and collaborations.
             <br />
             Let&apos;s build something extraordinary together.
@@ -21,29 +19,30 @@ export default function ContactPage() {
         </section>
 
         <section className="max-w-md mx-auto w-full animate-in fade-in slide-in-from-bottom-10 duration-700 delay-200">
-          <div className="p-8 border border-accent/20 rounded-2xl bg-black/40 backdrop-blur-md relative overflow-hidden group">
-            <div className="absolute inset-0 bg-accent/5 transition-opacity duration-300 group-hover:bg-accent/10" />
+          <div className="p-8 bg-card rounded-[2rem] shadow-float border border-border relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
 
-            <div className="relative z-10 space-y-6">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10 space-y-8">
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Email</label>
-                <a href="mailto:hello@example.com" className="text-2xl font-bold text-white hover:text-highlight transition-colors">
+                <label className="block text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-2">Email</label>
+                <a href="mailto:ziyad1aku@gmail.com" className="text-xl font-medium text-foreground hover:text-primary transition-colors block">
                   ziyad1aku@gmail.com
                 </a>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">GitHub</label>
-                <a href="https://github.com/Ziyad-web-studio" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-white hover:text-highlight transition-colors">
+                <label className="block text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-2">GitHub</label>
+                <a href="https://github.com/Ziyad-web-studio" target="_blank" rel="noopener noreferrer" className="text-xl font-medium text-foreground hover:text-primary transition-colors block">
                   Ziyad-web-studio
                 </a>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1">Social</label>
-                <div className="flex gap-4 text-xl font-bold text-white">
-                  <a href="#" className="hover:text-highlight transition-colors">Twitter</a>
-                  <a href="#" className="hover:text-highlight transition-colors">LinkedIn</a>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-2">Social</label>
+                <div className="flex gap-6 text-lg font-medium text-foreground">
+                  <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+                  <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
                 </div>
               </div>
             </div>
