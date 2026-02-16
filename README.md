@@ -1,71 +1,74 @@
-# Futuristic Minimal Portfolio
+# Portofolio Minimalis Modern (Apple-Inspired)
 
-A modern, brutalist-style personal portfolio website built with Next.js (App Router), Tailwind CSS, and TypeScript.
+Ini adalah website portofolio personal yang dibangun dengan **Next.js 15**, **TypeScript**, **Tailwind CSS**, dan **Framer Motion**. Desainnya terinspirasi oleh estetika Apple yang minimalis, futuristik, dan clean, dengan dominasi mode gelap.
 
-## Features
+## Fitur Utama
 
-- **Futuristic Design**: Clean, dark, and powerful aesthetic with violet accents.
-- **Projects Management**: Admin panel to manage projects.
-- **File-Based CMS**: Projects are stored in `src/data/projects.json`.
-- **GitHub Integration**: Publishing updates directly to GitHub to trigger Vercel deployments.
-- **Authentication**: Simple password-based admin access.
+### 1. Desain UI/UX Premium
+- **Apple Aesthetic**: Menggunakan font sans-serif bersih, sudut membulat (`rounded-xl`), bayangan lembut, dan efek glassmorphism.
+- **Dark Mode Dominant**: Latar belakang utama `#0A0A0A` dengan aksen `#8A2BE2` (Violet) dan highlight `#BFFF00` (Neon Green).
+- **Smooth Motion**: Transisi halaman dan animasi mikro yang halus menggunakan Framer Motion.
 
-## Tech Stack
+### 2. Struktur Konten Publik
+- **Home**: Hero section fullscreen, pernyataan misi, dan call-to-action yang jelas.
+- **Projects**: Menampilkan daftar proyek dengan status (Completed, In Progress, Draft, On Hold).
+- **About**:
+  - **Coding Journey**: Timeline interaktif perjalanan karir/belajar.
+  - **Tools & Ecosystem**: Grid alat-alat yang digunakan (VSCode, Vercel, AI, dll).
+- **Music Section**: Widget musik minimalis dengan preview lagu favorit.
 
-- Next.js 16 (App Router)
-- Tailwind CSS 4
-- TypeScript
-- Framer Motion
-- Lucide React
-- Octokit (GitHub API)
-- Jose (JWT Auth)
+### 3. Admin Panel Terintegrasi (`/admin`)
+- **Autentikasi Aman**: Login menggunakan password yang disimpan di Environment Variable (`ADMIN_PASSWORD`).
+- **Manajemen Proyek**: Tambah, edit, hapus, dan ubah status proyek.
+- **Code Editor**: Integrasi **Monaco Editor** untuk mengedit file konfigurasi atau konten langsung dari browser.
+- **GitHub Sync**: Mempublikasikan perubahan data (`projects.json`) atau file lainnya langsung ke repositori GitHub menggunakan GitHub API.
 
-## Setup
+## Teknologi
 
-1.  **Clone the repository:**
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animation**: Framer Motion
+- **Editor**: @monaco-editor/react
+- **Auth**: JWT (jose)
+- **API Integration**: Octokit (GitHub REST API)
+
+## Cara Menjalankan (Lokal)
+
+1.  **Clone Repositori**
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/username/repo-name.git
+    cd repo-name
     ```
 
-2.  **Install dependencies:**
+2.  **Install Dependencies**
     ```bash
     npm install
     ```
 
-3.  **Environment Variables:**
-    Copy `.env.example` to `.env.local` and fill in the values:
-    ```bash
-    cp .env.example .env.local
+3.  **Setup Environment Variables**
+    Buat file `.env.local` di root direktori dan isi:
+    ```env
+    ADMIN_PASSWORD=rahasia_anda
+    JWT_SECRET=kunci_rahasia_jwt_anda
+    GITHUB_TOKEN=token_github_anda_dengan_scope_repo
+    GITHUB_REPO_OWNER=username_github_anda
+    GITHUB_REPO_NAME=nama_repo_anda
     ```
-    - `ADMIN_PASSWORD`: Password for accessing the admin panel.
-    - `JWT_SECRET`: Secret key for signing JWTs (generate a strong random string).
-    - `GITHUB_TOKEN`: A GitHub Personal Access Token (PAT) with `repo` scope.
-    - `GITHUB_REPO_OWNER`: Your GitHub username.
-    - `GITHUB_REPO_NAME`: The name of this repository.
 
-4.  **Run locally:**
+4.  **Jalankan Server Development**
     ```bash
     npm run dev
     ```
-    Visit `http://localhost:3000` for the public site.
-    Visit `http://localhost:3000/admin` for the admin panel.
+    Buka `http://localhost:3000`.
 
-## Deployment on Vercel
+## Deployment (Vercel)
 
-1.  Push your code to a GitHub repository.
-2.  Import the project into Vercel.
-3.  Add the environment variables from your `.env.local` to the Vercel project settings.
-4.  Deploy!
+1.  Push kode ke GitHub.
+2.  Import proyek ke Vercel.
+3.  Masukkan Environment Variables yang sama di pengaturan Vercel.
+4.  Deploy.
 
-## Admin Usage
-
-1.  Navigate to `/admin`.
-2.  Login with your `ADMIN_PASSWORD`.
-3.  Add or edit projects.
-4.  Click "Publish to GitHub" to commit changes to `src/data/projects.json`.
-5.  Wait for Vercel to redeploy with the new content.
-
-## License
+## Lisensi
 
 MIT
