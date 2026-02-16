@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Project } from '@/types';
-import { Plus, Trash2, Edit, Upload, ExternalLink } from 'lucide-react';
+import { Project, ProjectStatus } from '@/types';
+import { Plus, Trash2, Edit, Upload, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+
   const router = useRouter();
 
+  // Load Projects
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -30,7 +32,7 @@ export default function AdminDashboard() {
     fetchProjects();
   }, [router]);
 
-  const handleSave = async (projectsToSave: Project[]) => {
+  const handleSaveProjects = async (projectsToSave: Project[]) => {
     try {
       await fetch('/api/projects', {
         method: 'POST',
@@ -44,7 +46,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const handlePublish = async () => {
+  const handlePublishProjects = async () => {
     if (confirm('Are you sure you want to publish changes to GitHub? This will trigger a deployment.')) {
       try {
         setLoading(true);
@@ -78,18 +80,16 @@ export default function AdminDashboard() {
       demoLink: '',
       repoLink: '',
       isPublished: false,
+      status: 'Draft',
+      createdAt: new Date().toISOString()
     };
     setEditingProject(newProject);
-  };
-
-  const handleEditProject = (project: Project) => {
-    setEditingProject({ ...project });
   };
 
   const handleDeleteProject = (id: string) => {
     if (confirm('Delete this project?')) {
       const updatedProjects = projects.filter(p => p.id !== id);
-      handleSave(updatedProjects);
+      handleSaveProjects(updatedProjects);
     }
   };
 
@@ -99,148 +99,168 @@ export default function AdminDashboard() {
       const updatedProjects = exists
         ? projects.map(p => p.id === editingProject.id ? editingProject : p)
         : [...projects, editingProject];
-      handleSave(updatedProjects);
+      handleSaveProjects(updatedProjects);
     }
   };
 
-  if (loading) return <div className="flex h-screen items-center justify-center text-white bg-primary-bg">Loading...</div>;
+  if (loading) return <div className="flex h-screen items-center justify-center text-white bg-background font-mono">LOADING_SYSTEM...</div>;
 
   return (
-    <div className="min-h-screen bg-primary-bg p-8 text-white selection:bg-accent selection:text-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-          <h1 className="text-4xl font-black tracking-tighter text-white">
-            DASHBOARD<span className="text-accent">.</span>
-          </h1>
-          <div className="flex gap-4">
-            <button
-              onClick={handleAddProject}
-              className="flex items-center gap-2 bg-white/5 border border-white/10 px-6 py-3 rounded hover:bg-white/10 hover:border-white/20 transition-all duration-300 font-bold uppercase tracking-widest text-sm"
+    <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-white flex">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-white/5 p-6 flex flex-col fixed h-full bg-black/20 backdrop-blur-xl">
+        <h1 className="text-xl font-black tracking-tighter text-white mb-12">
+          ADMIN<span className="text-accent">PANEL</span>.
+        </h1>
+
+        <nav className="space-y-2">
+            <div
+              className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-widest transition-all bg-accent text-white shadow-[0_0_20px_rgba(138,43,226,0.2)]"
             >
-              <Plus size={16} /> Add Project
-            </button>
-            <button
-              onClick={handlePublish}
-              className="flex items-center gap-2 bg-accent text-white px-6 py-3 rounded hover:bg-accent/80 hover:shadow-[0_0_20px_rgba(138,43,226,0.4)] transition-all duration-300 font-bold uppercase tracking-widest text-sm"
-            >
-              <Upload size={16} /> Publish Changes
-            </button>
-          </div>
+              Projects
+            </div>
+        </nav>
+
+        <div className="mt-auto pt-6 border-t border-white/5">
+          <p className="text-xs text-gray-600 font-mono">v2.0.0 Stable</p>
         </div>
+      </aside>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map(project => (
-            <div key={project.id} className="bg-white/5 border border-white/10 rounded-xl p-6 relative group overflow-hidden hover:border-accent/40 transition-colors duration-300">
-              <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                <button onClick={() => handleEditProject(project)} className="p-2 bg-blue-500/20 text-blue-400 rounded hover:bg-blue-500/40 backdrop-blur-md">
-                  <Edit size={16} />
+      {/* Main Content */}
+      <main className="flex-1 ml-64 p-8">
+          <div className="max-w-7xl mx-auto space-y-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-3xl font-bold text-white">Project Management</h2>
+              <div className="flex gap-4">
+                <button
+                  onClick={handleAddProject}
+                  className="flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2.5 rounded-lg hover:bg-white/10 hover:border-white/20 transition-all font-bold uppercase tracking-widest text-xs text-white"
+                >
+                  <Plus size={14} /> New Project
                 </button>
-                <button onClick={() => handleDeleteProject(project.id)} className="p-2 bg-red-500/20 text-red-400 rounded hover:bg-red-500/40 backdrop-blur-md">
-                  <Trash2 size={16} />
+                <button
+                  onClick={handlePublishProjects}
+                  className="flex items-center gap-2 bg-highlight text-black px-5 py-2.5 rounded-lg hover:bg-white hover:shadow-[0_0_20px_rgba(191,255,0,0.4)] transition-all font-bold uppercase tracking-widest text-xs"
+                >
+                  <Upload size={14} /> Publish All
                 </button>
               </div>
+            </div>
 
-              <div className="mb-4 aspect-video bg-black/50 rounded-lg overflow-hidden border border-white/5">
-                {project.thumbnail ? (
-                  <img src={project.thumbnail} alt={project.title} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-600 text-xs uppercase tracking-widest">No Image</div>
-                )}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map(project => (
+                <div key={project.id} className="bg-card border border-white/5 rounded-2xl p-6 relative group hover:border-accent/30 transition-all duration-300">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className={`px-2 py-1 text-[9px] font-mono uppercase tracking-widest rounded border ${project.status === 'Completed' ? 'bg-accent/10 text-accent border-accent/20' : 'bg-white/5 text-gray-400 border-white/10'}`}>
+                      {project.status || 'Draft'}
+                    </span>
+                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => setEditingProject(project)} className="p-1.5 hover:text-accent transition-colors"><Edit size={16} /></button>
+                      <button onClick={() => handleDeleteProject(project.id)} className="p-1.5 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                    </div>
+                  </div>
 
-              <h3 className="font-bold text-lg mb-2 truncate">{project.title || 'Untitled Project'}</h3>
-              <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10">{project.description || 'No description'}</p>
+                  <h3 className="font-bold text-lg text-white mb-1 truncate">{project.title}</h3>
+                  <p className="text-xs text-gray-500 font-mono mb-4">{new Date(project.createdAt || Date.now()).toLocaleDateString()}</p>
 
-              <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
-                <span className={`px-2 py-1 text-[10px] font-mono uppercase tracking-widest rounded border ${project.isPublished ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'}`}>
-                  {project.isPublished ? 'Published' : 'Draft'}
-                </span>
-                <div className="flex gap-2">
-                   {project.demoLink && <ExternalLink size={14} className="text-gray-500" />}
+                  <div className="aspect-video bg-black/40 rounded-lg overflow-hidden border border-white/5 mb-4 relative">
+                    {project.thumbnail ? (
+                      <img src={project.thumbnail} className="w-full h-full object-cover opacity-60" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-700 text-[10px] uppercase">No Preview</div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+      </main>
 
-          {projects.length === 0 && (
-            <div className="col-span-full py-20 text-center border-2 border-dashed border-white/10 rounded-xl text-gray-500">
-              <p>No projects found. Add one to get started.</p>
-            </div>
-          )}
-        </div>
-      </div>
-
+      {/* Edit Modal */}
       {editingProject && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
-          <div className="bg-[#0A0A0A] border border-accent/20 rounded-xl w-full max-w-2xl p-8 max-h-[90vh] overflow-y-auto shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-            <h2 className="text-2xl font-bold mb-8 text-white border-b border-white/10 pb-4">
-              {projects.some(p => p.id === editingProject.id) ? 'Edit Project' : 'New Project'}
-            </h2>
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
+          <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col">
+            <div className="flex justify-between items-center p-6 border-b border-white/5 sticky top-0 bg-[#0A0A0A] z-10">
+              <h2 className="text-xl font-bold text-white">
+                {projects.some(p => p.id === editingProject.id) ? 'Edit Project' : 'New Project'}
+              </h2>
+              <button onClick={() => setEditingProject(null)} className="text-gray-500 hover:text-white"><X size={20} /></button>
+            </div>
 
-            <div className="space-y-6">
-              <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Title</label>
-                <input
-                  type="text"
-                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none transition-colors"
-                  value={editingProject.title}
-                  onChange={e => setEditingProject({...editingProject, title: e.target.value})}
-                  placeholder="Project Title"
-                />
+            <div className="p-8 space-y-6">
+              <div className="grid grid-cols-2 gap-6">
+                 <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Title</label>
+                    <input
+                      type="text"
+                      className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm"
+                      value={editingProject.title}
+                      onChange={e => setEditingProject({...editingProject, title: e.target.value})}
+                    />
+                 </div>
+                 <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Status</label>
+                    <select
+                      className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm appearance-none"
+                      value={editingProject.status}
+                      onChange={e => setEditingProject({...editingProject, status: e.target.value as ProjectStatus})}
+                    >
+                      <option value="Draft">Draft</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                      <option value="On Hold">On Hold</option>
+                    </select>
+                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Description</label>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Description</label>
                 <textarea
-                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none h-32 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none h-32 text-sm resize-none"
                   value={editingProject.description}
                   onChange={e => setEditingProject({...editingProject, description: e.target.value})}
-                  placeholder="Project Description"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Thumbnail URL</label>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Thumbnail URL</label>
                 <input
                   type="text"
-                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none transition-colors"
+                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm"
                   value={editingProject.thumbnail}
                   onChange={e => setEditingProject({...editingProject, thumbnail: e.target.value})}
-                  placeholder="https://..."
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Demo Link</label>
+                  <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Demo Link</label>
                   <input
                     type="text"
-                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm"
                     value={editingProject.demoLink}
                     onChange={e => setEditingProject({...editingProject, demoLink: e.target.value})}
-                    placeholder="https://..."
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Repo Link</label>
+                  <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Repo Link</label>
                   <input
                     type="text"
-                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm"
                     value={editingProject.repoLink}
                     onChange={e => setEditingProject({...editingProject, repoLink: e.target.value})}
-                    placeholder="https://..."
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Tech Stack (comma separated)</label>
+                <label className="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Tech Stack</label>
                 <input
                   type="text"
-                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent focus:bg-accent/5 outline-none transition-colors"
+                  className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-accent outline-none text-sm"
                   value={editingProject.techStack.join(', ')}
                   onChange={e => setEditingProject({...editingProject, techStack: e.target.value.split(',').map(s => s.trim())})}
-                  placeholder="React, Next.js, Tailwind..."
+                  placeholder="React, Next.js..."
                 />
               </div>
 
@@ -250,25 +270,15 @@ export default function AdminDashboard() {
                   id="isPublished"
                   checked={editingProject.isPublished}
                   onChange={e => setEditingProject({...editingProject, isPublished: e.target.checked})}
-                  className="w-5 h-5 accent-accent cursor-pointer"
+                  className="w-4 h-4 accent-accent"
                 />
-                <label htmlFor="isPublished" className="text-white cursor-pointer select-none text-sm font-medium">Publish immediately</label>
+                <label htmlFor="isPublished" className="text-white select-none text-sm font-medium">Publish to Live Site</label>
               </div>
             </div>
 
-            <div className="flex justify-end gap-4 mt-8 pt-4 border-t border-white/10">
-              <button
-                onClick={() => setEditingProject(null)}
-                className="px-6 py-3 rounded text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-widest text-sm"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveEdit}
-                className="px-8 py-3 bg-accent text-white rounded font-bold hover:bg-accent/80 transition-colors uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(138,43,226,0.3)]"
-              >
-                Save Changes
-              </button>
+            <div className="p-6 border-t border-white/5 bg-black/40 flex justify-end gap-3 sticky bottom-0">
+               <button onClick={() => setEditingProject(null)} className="px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-white">Cancel</button>
+               <button onClick={handleSaveEdit} className="px-8 py-2.5 rounded-lg text-sm font-bold uppercase tracking-widest bg-accent text-white hover:bg-accent/80 shadow-lg shadow-accent/20">Save Project</button>
             </div>
           </div>
         </div>
