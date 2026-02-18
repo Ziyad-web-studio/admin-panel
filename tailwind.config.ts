@@ -7,6 +7,33 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    spacing: {
+      "0": "0px", // Often needed for reset
+      "8": "8px",
+      "16": "16px",
+      "24": "24px",
+      "32": "32px",
+      "48": "48px",
+      "64": "64px",
+      "96": "96px",
+    },
+    borderRadius: {
+      DEFAULT: "8px",
+      lg: "16px",
+      full: "9999px",
+      none: "0", // Usually good to have for resets
+    },
+    fontSize: {
+      h1: ["48px", { lineHeight: "1.1", fontWeight: "600" }],
+      h2: ["24px", { lineHeight: "1.2", fontWeight: "500" }],
+      body: ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+      small: ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+      chip: ["12px", { lineHeight: "1.4", fontWeight: "500" }],
+    },
+    boxShadow: {
+      none: "none",
+      1: "0 4px 12px rgba(0, 0, 0, 0.08)",
+    },
     extend: {
       colors: {
         background: "#0A0A0A",
@@ -17,16 +44,8 @@ const config: Config = {
         accent: "#8A2BE2",
         highlight: "#BFFF00",
       },
-      spacing: {
-        18: "4.5rem", // 72px
-        22: "5.5rem", // 88px
-        // defaults cover most 8px multiples: 2 (8px), 4 (16px), 6 (24px), 8 (32px), 12 (48px), 16 (64px), 24 (96px)
-      },
-      borderRadius: {
-        sm: "8px", // override or just use rounded-sm? 8px is usually rounded-md or lg. Default rounded is 0.25rem (4px).
-        md: "8px",
-        lg: "16px",
-        full: "9999px",
+      maxWidth: {
+        "desktop": "1200px",
       },
     },
   },
