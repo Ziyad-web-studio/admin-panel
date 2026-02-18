@@ -35,7 +35,7 @@ export default function Home() {
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center rounded-full border-2 border-accent/30 bg-surface p-8 shadow-1">
             <Image
-              src="/images/profile.JPG"
+              src="/images/profile.jpg"
               alt="Profile silhouette"
               width={256}
               height={256}
