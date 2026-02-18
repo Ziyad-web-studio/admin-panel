@@ -32,6 +32,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/70 shadow-1 backdrop-blur-md">
       <Container className="flex h-64 items-center justify-between">
+        <div className="text-h2 font-semibold text-primary">ZT</div>
         <nav className="flex items-center gap-16">
           {navItems.map((item) => {
             const active = isActive(item.path);
@@ -51,7 +52,6 @@ export default function Navbar() {
             );
           })}
         </nav>
-        <div className="text-h2 font-semibold text-primary">ZT</div>
       </Container>
     </header>
   );
