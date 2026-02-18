@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, FolderKanban, Mail } from "lucide-react";
+import Container from "@/components/Container";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -17,44 +17,42 @@ export default function Navbar() {
   const navItems = [
     {
       path: "/",
-      icon: Home,
       label: "Home",
     },
     {
       path: "/projects",
-      icon: FolderKanban,
       label: "Projects",
     },
     {
       path: "/contact",
-      icon: Mail,
       label: "Contact",
     },
   ];
 
   return (
-    <nav className="fixed bottom-32 left-1/2 z-50 -translate-x-1/2">
-      <div className="flex items-center gap-8 rounded-full border border-border bg-surface/80 p-8 shadow-1 backdrop-blur-md">
-        {navItems.map((item) => {
-          const active = isActive(item.path);
-          const Icon = item.icon;
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/70 shadow-1 backdrop-blur-md">
+      <Container className="flex h-64 items-center justify-between">
+        <nav className="flex items-center gap-16">
+          {navItems.map((item) => {
+            const active = isActive(item.path);
 
-          return (
-            <Link
-              key={item.path}
-              href={item.path}
-              aria-label={item.label}
-              className={`flex h-48 w-48 items-center justify-center rounded-full transition-colors duration-200 ${
-                active
-                  ? "bg-background text-highlight"
-                  : "bg-transparent text-secondary hover:text-primary"
-              }`}
-            >
-              <Icon size={24} strokeWidth={2} />
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
+            return (
+              <Link
+                key={item.path}
+                href={item.path}
+                className={`rounded px-16 py-8 text-small font-medium transition-all duration-200 ${
+                  active
+                    ? "bg-accent/10 text-primary"
+                    : "bg-transparent text-secondary hover:bg-surface hover:text-primary"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="text-h2 font-semibold text-primary">ZT</div>
+      </Container>
+    </header>
   );
 }
