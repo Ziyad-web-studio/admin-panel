@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Container from "@/components/Container";
-import AbstractSystemCard from "@/components/AbstractSystemCard";
 
 export default function Home() {
   return (
@@ -18,22 +18,30 @@ export default function Home() {
           <div className="flex flex-col gap-16 sm:flex-row">
             <a
               href="/projects"
-              className="inline-flex items-center justify-center rounded-lg bg-accent px-32 py-16 text-body font-medium text-primary transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center rounded bg-accent px-32 py-16 text-body font-medium text-primary transition-opacity hover:opacity-90"
             >
               View Projects
             </a>
             <a
               href="/contact"
-              className="inline-flex items-center justify-center rounded-lg border border-border bg-transparent px-32 py-16 text-body font-medium text-primary transition-colors hover:bg-surface"
+              className="inline-flex items-center justify-center rounded border border-border bg-transparent px-32 py-16 text-body font-medium text-primary transition-colors hover:bg-surface"
             >
               Contact Me
             </a>
           </div>
         </div>
 
-        {/* Right Column: Abstract System Card */}
+        {/* Right Column: Profile Image */}
         <div className="flex items-center justify-center">
-          <AbstractSystemCard />
+          <div className="flex items-center justify-center rounded-full border-2 border-accent/30 bg-surface p-8 shadow-1">
+            <Image
+              src="/images/profile.JPG"
+              alt="Profile silhouette"
+              width={256}
+              height={256}
+              className="rounded-full object-cover grayscale"
+            />
+          </div>
         </div>
       </div>
     </Container>
