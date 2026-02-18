@@ -1,12 +1,26 @@
 import Image from "next/image";
 import Container from "@/components/Container";
+import AbstractSystemCard from "@/components/AbstractSystemCard";
 
 export default function Home() {
   return (
     <Container className="flex min-h-screen flex-col items-center justify-center py-64 md:py-96">
       <div className="grid w-full grid-cols-1 gap-64 lg:grid-cols-2 lg:gap-96">
-        {/* Left Column: Strategic Content */}
-        <div className="flex flex-col justify-center gap-32">
+        {/* Item 1: Profile Image (Mobile: Top, Desktop: Top Right) */}
+        <div className="flex items-center justify-center order-1 lg:col-start-2 lg:row-start-1">
+          <div className="flex items-center justify-center rounded-full border-2 border-accent/30 bg-surface p-8 shadow-1">
+            <Image
+              src="/images/profile.jpg"
+              alt="Profile silhouette"
+              width={256}
+              height={256}
+              className="rounded-full object-cover grayscale"
+            />
+          </div>
+        </div>
+
+        {/* Item 2: Strategic Content (Mobile: Middle, Desktop: Left Column) */}
+        <div className="flex flex-col justify-center gap-32 order-2 lg:col-start-1 lg:row-start-1 lg:row-span-2 self-center">
           <h1 className="text-h1 text-primary">
             Engineering Structured Digital Systems.
           </h1>
@@ -31,17 +45,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Column: Profile Image */}
-        <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center rounded-full border-2 border-accent/30 bg-surface p-8 shadow-1">
-            <Image
-              src="/images/profile.jpg"
-              alt="Profile silhouette"
-              width={256}
-              height={256}
-              className="rounded-full object-cover grayscale"
-            />
-          </div>
+        {/* Item 3: Dashboard Card (Mobile: Bottom, Desktop: Bottom Right) */}
+        <div className="flex items-center justify-center order-3 lg:col-start-2 lg:row-start-2">
+          <AbstractSystemCard />
         </div>
       </div>
     </Container>
