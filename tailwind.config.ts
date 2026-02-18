@@ -30,6 +30,10 @@ const config: Config = {
       small: ["14px", { lineHeight: "1.5", fontWeight: "400" }],
       chip: ["12px", { lineHeight: "1.4", fontWeight: "500" }],
     },
+    boxShadow: {
+      none: "none",
+      1: "0 4px 12px rgba(0, 0, 0, 0.08)",
+    },
     extend: {
       colors: {
         background: "#0A0A0A",
